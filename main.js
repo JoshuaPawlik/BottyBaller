@@ -6,6 +6,7 @@ require('dotenv').config();
 
 //Channel variables
 // const bot_testing = '776494471813922836'
+const thisOrThat = '787758467406495806';
 const clips = '771437521875763251';
 const memes = '749073713164714174';
 const emoji_submissions = '776528360850587648';
@@ -116,9 +117,18 @@ client.on('message', message =>{
     } else if (command == 'invite'){
         client.commands.get('invite').execute(message, args,client);
     } 
-    // else if (command === 'tot'){
-    //     client.commands.get('tot').execute(message,args,client);
-    // }
+    else if (command === 'tot'){
+        if (message.channel.id !== `${thisOrThat}`){
+            message.channel.send(`Ask ToTs in <#${thisOrThat}>`)
+            .then(msg => {
+                message.delete().then(() =>{
+                    msg.delete({timeout: 5000});
+                }).catch(console.error);
+            })
+        } else {
+            client.commands.get('tot').execute(message,args,client);
+        }
+    }
 })
 
 

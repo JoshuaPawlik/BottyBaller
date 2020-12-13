@@ -80,6 +80,18 @@ client.on('message', message =>{
         .catch(console.error);
       }  
     }
+    else if(message.channel.id === thisOrThat /*|| message.channel.id === bot_testing*/){
+        if(((!message.content.startsWith(prefix) && !message.content.startsWith(prefix2)) || (!message.content.includes('tot'))) && message.author.id !== message.guild.ownerID ){
+          message.channel.send("This or That usage is: ```caffeine tot <this> or <that>```")
+          .then(msg => {
+              message.delete().then(() =>{
+                  msg.delete({timeout: 15000});
+              }).catch(console.error);
+          })
+          .catch(console.error);
+        }  
+      }
+    
 
     if(!message.content.startsWith(prefix) && !message.content.startsWith(prefix2)) return;
 

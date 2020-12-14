@@ -81,14 +81,17 @@ client.on('message', message =>{
       }  
     }
     else if(message.channel.id === thisOrThat /*|| message.channel.id === bot_testing*/){
-        if(((!message.content.startsWith(prefix) && !message.content.startsWith(prefix2)) || (!message.content.includes('tot'))) && message.author.id !== message.guild.ownerID ){
-          message.channel.send("This or That usage is: ```caffeine tot <this> or <that>```")
+        if(!message.content.includes('or') && message.author.id !== message.guild.ownerID ){
+          message.channel.send("This or That usage is: ```<this> or <that>```")
           .then(msg => {
               message.delete().then(() =>{
                   msg.delete({timeout: 15000});
               }).catch(console.error);
           })
           .catch(console.error);
+        } else {
+            client.commands.get('tot').execute(message,client);
+            return;
         }  
       }
     
@@ -129,18 +132,6 @@ client.on('message', message =>{
     } else if (command == 'invite'){
         client.commands.get('invite').execute(message, args,client);
     } 
-    else if (command === 'tot'){
-        if (message.channel.id !== `${thisOrThat}`){
-            message.channel.send(`Ask ToTs in <#${thisOrThat}>`)
-            .then(msg => {
-                message.delete().then(() =>{
-                    msg.delete({timeout: 5000});
-                }).catch(console.error);
-            })
-        } else {
-            client.commands.get('tot').execute(message,args,client);
-        }
-    }
 })
 
 

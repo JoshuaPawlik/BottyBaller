@@ -3,7 +3,7 @@ const { MessageEmbed, messageReaction } = require("discord.js")
 module.exports = {
     name: 'tot',
     description: '',
-    execute(message,args, client){
+    execute(message, client){
 
         // if (!args[1]){
         //     const Embed = new MessageEmbed()
@@ -12,8 +12,9 @@ module.exports = {
         //     client.channels.cache.get('752405474288074804').send({embed: Embed});
         //     return;
         // }
-        let msgArgs = args.slice(0).join(" ");
-        var splitted = msgArgs.split("or");
+        // let msgArgs = args.slice(0).join(" ");
+        // var splitted = msgArgs.split("or");
+        var splitted = message.content.split("or")
         var tis = splitted[0];
         var that = splitted[1];
 
@@ -23,7 +24,7 @@ module.exports = {
         console.log("------------------->", message);
 
         if (!tis || !that){
-            message.channel.send("This or That usage is: ```caffeine tot <this> or <that>```").then(msg => {
+            message.channel.send("This or That usage is: ```<this> or <that>```").then(msg => {
                 message.delete().then(() =>{
                     msg.delete({timeout: 15000});
                 }).catch(console.error);

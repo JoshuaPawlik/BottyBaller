@@ -132,18 +132,6 @@ client.on('message', message =>{
     } else if (command == 'invite'){
         client.commands.get('invite').execute(message, args,client);
     } 
-    else if (command === 'tot'){
-        if (message.channel.id !== `${thisOrThat}`){
-            message.channel.send(`Ask ToTs in <#${thisOrThat}>`)
-            .then(msg => {
-                message.delete().then(() =>{
-                    msg.delete({timeout: 5000});
-                }).catch(console.error);
-            })
-        } else {
-            client.commands.get('tot').execute(message,client);
-        }
-    }
 })
 
 

@@ -1,7 +1,7 @@
 const { MessageEmbed, messageReaction } = require("discord.js")
 
 module.exports = {
-    name: 'tot',
+    commands: 'tot',
     description: '',
     execute(message, client){
 

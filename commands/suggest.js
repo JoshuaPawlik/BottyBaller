@@ -1,9 +1,9 @@
 const { MessageEmbed, messageReaction } = require("discord.js")
 
 module.exports = {
-    name: 'suggest',
+    commands: 'suggest',
     description: '',
-    execute(message,args, client){
+    callback:(message,args, text, client) => {
 
         if (!args[1]){
             const Embed = new MessageEmbed()

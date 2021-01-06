@@ -1,9 +1,8 @@
 const { MessageEmbed, messageReaction } = require("discord.js")
 
 module.exports = {
-    name: 'coinflip',
-    description: '',
-    execute(message,args){
+   commands:['coinflip', 'flip'],
+    callback: (message,args, text) => {
 
         // if (!args[1]){
         //     const Embed = new MessageEmbed()

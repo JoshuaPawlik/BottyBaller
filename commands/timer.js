@@ -8,7 +8,7 @@ function sendMessage(message){
 
 
 module.exports = {
-    name: 'timer',
+    commands: 'timer',
     description: "This will make Caffeine ping you after a certain amount of time",
     execute(message, args,client){
         // let msgArgs = args.slice(0).join(" ");

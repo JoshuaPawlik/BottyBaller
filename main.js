@@ -1,6 +1,9 @@
 const Discord = require('discord.js');
 require('dotenv').config();
-// const Sequelize = require('sequelize');
+const {prefix, prefix2} = require('./config.json')
+const command = require('./command');
+const fs = require('fs');
+const path = require('path');
 
 
 
@@ -14,24 +17,64 @@ const server_suggestions = '752405474288074804';
 
 const client = new Discord.Client();
 
-const prefix = 'caffeine';
-const prefix2 ='Caffeine'
 
-const fs = require('fs');
 
-client.commands = new Discord.Collection();
+const config = require('./config.json');
 
-const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+client.on('ready', async () => {
+    console.log("Caffeine is online");
 
-for(const file of commandFiles){
-    const command = require(`./commands/${file}`);
+    const baseFile = 'command-base.js';
+    const commandBase = require(`./commands/${baseFile}`);
 
-    client.commands.set(command.name, command);
-}
+    const readCommands = dir => {
+        const files = fs.readdirSync(path.join(__dirname, dir))
 
-client.once('ready', () => {
-    console.log('Caffeine is online!');
-});
+        for (const file of files) {
+            const stat = fs.lstatSync(path.join(__dirname,dir, file))
+            if (stat.isDirectory()){
+                readCommands(path.join(dir, file))
+            } else if (file !== baseFile) {
+                const option = require(path.join(__dirname,dir, file));
+                // console.log(file, option);
+                commandBase(client, option);
+            }
+        }
+    }
+
+    readCommands('commands');
+})
+
+
+
+
+
+// client.once('ready', () => {
+//     console.log('Caffeine is online!');
+// });
+
+
+// command(client, ['ping'], (message) => {
+//     message.channel.send("Pong!");
+// })
+
+
+// command(client, 'server', (message) => {
+//     client.guilds.cache.forEach(guild => {
+//         message.channel.send(`${guild.name} has a total of ${guild.memberCount} members`)
+//     })
+// })
+
+// command(client, 'status', (message) => {
+//     const content = message.content.replace('caffeine status', '');
+
+//     client.user.setPresence({
+//         activity:{
+//             name: content,
+//             type:0
+//         }
+//     })
+// })
 
 client.on('message', message =>{
 
@@ -142,30 +185,3 @@ client.on('message', message =>{
 
 //Keep this at the bottom of the file
 client.login(process.env.BOT_TOKEN);
-
-
-
-
-
-// const sequelize = new Sequelize('database', 'user', 'password', {
-// 	host: 'localhost',
-// 	dialect: 'sqlite',
-// 	logging: false,
-// 	// SQLite only
-// 	storage: 'database.sqlite',
-// });
-
-
-// const Tags = sequelize.define('tags', {
-// 	name: {
-// 		type: Sequelize.STRING,
-// 		unique: true,
-// 	},
-// 	description: Sequelize.TEXT,
-// 	username: Sequelize.STRING,
-// 	usage_count: {
-// 		type: Sequelize.INTEGER,
-// 		defaultValue: 0,
-// 		allowNull: false,
-// 	},
-// });

@@ -1,7 +1,7 @@
 const { MessageEmbed, messageReaction } = require("discord.js")
 
 module.exports = {
-    name: 'invite',
+   commands:['invite'],
     description: '',
     execute(message,args){
 

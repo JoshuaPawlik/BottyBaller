@@ -2,7 +2,7 @@ const { MessageEmbed } = require("discord.js");
 
 
 module.exports = {
-    name: 'start',
+    commands: 'start',
     description: "This will make Caffeine say something for you",
     execute(message, args,client){
         let msgArgs = args.slice(0).join(" ");

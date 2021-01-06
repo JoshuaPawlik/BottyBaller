@@ -1,7 +1,7 @@
 const { MessageEmbed, messageReaction } = require("discord.js");
 
 module.exports = {
-    name: 'poll',
+    commands: 'poll',
     description: '',
     execute(message,args){
         const Embed = new MessageEmbed()

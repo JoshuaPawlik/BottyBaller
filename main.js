@@ -11,6 +11,7 @@ const clips = '771437521875763251';
 const memes = '749073713164714174';
 const emoji_submissions = '776528360850587648';
 const server_suggestions = '752405474288074804';
+const polls = '808969588603224084';
 
 const client = new Discord.Client();
 
@@ -25,7 +26,7 @@ const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('
 
 for(const file of commandFiles){
     const command = require(`./commands/${file}`);
-
+    
     client.commands.set(command.name, command);
 }
 
@@ -35,9 +36,11 @@ client.once('ready', () => {
 
 client.on('message', message =>{
 
+    const channelId = message.channel.id;
+    
     if(message.author.bot) return;
 
-    if(message.channel.id === clips|| message.channel.id === memes){
+    if(channelId === clips|| channelId === memes){
 
        if (message.content.includes('https:'||'http:') || message.attachments.size > 0) {
             // console.log("------------------------> Message \n", JSON.stringify(message.attachments));
@@ -51,7 +54,7 @@ client.on('message', message =>{
 
     }
                                     //Emoji-submissions
-    else if(message.channel.id === emoji_submissions){
+    else if(channelId === emoji_submissions){
 
         if (message.attachments.size > 0){
             // console.log("------------------------> Message \n", JSON.stringify(message.attachments));
@@ -69,7 +72,7 @@ client.on('message', message =>{
         }
         return;
     }
-    else if(message.channel.id === server_suggestions /*|| message.channel.id === bot_testing*/){
+    else if(channelId === server_suggestions /*|| channelId === bot_testing*/){
       if(((!message.content.startsWith(prefix) && !message.content.startsWith(prefix2)) || (!message.content.includes('suggest'))) && message.author.id !== message.guild.ownerID ){
         message.channel.send("Suggestions usage is: ```caffeine suggest [your suggestion]```")
         .then(msg => {
@@ -80,7 +83,7 @@ client.on('message', message =>{
         .catch(console.error);
       }  
     }
-    else if(message.channel.id === thisOrThat /*|| message.channel.id === bot_testing*/){
+    else if(channelId === thisOrThat /*|| channelId === bot_testing*/){
         if(!message.content.includes('or') && message.author.id !== message.guild.ownerID ){
           message.channel.send("This or That usage is: ```<this> or <that>```")
           .then(msg => {
@@ -94,8 +97,6 @@ client.on('message', message =>{
             return;
         }  
       }
-    
-
     if(!message.content.startsWith(prefix) && !message.content.startsWith(prefix2)) return;
 
     const args = message.content.slice(prefix.length).split(/ +/);
@@ -111,7 +112,7 @@ client.on('message', message =>{
     } else if (command == 'poll'){
         client.commands.get('poll').execute(message, args);
     } else if (command == 'suggest'){   
-        if (message.channel.id !== '752405474288074804'){
+        if (channelId !== '752405474288074804'){
             message.channel.send(`Suggestions are made in <#${server_suggestions}>`)
             .then(msg => {
                 message.delete().then(() =>{
@@ -125,8 +126,6 @@ client.on('message', message =>{
         client.commands.get('timer').execute(message, args);
     } else if ( command == 'coinflip'){
         client.commands.get('coinflip').execute(message, args);
-    } else if (command == 'ss'){
-        // client.commands.get('coinflip').execute(message, args);
     } else if (command == 'start'){
         client.commands.get('start').execute(message, args,client);
     } else if (command == 'invite'){

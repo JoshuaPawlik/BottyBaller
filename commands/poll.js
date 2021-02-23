@@ -47,7 +47,7 @@ module.exports = {
         }
 
         const Embed = {
-            title: `${message.author.username} asks:`,
+            title: `${message.author.username} asks a poll:`,
             description: `**${question}**\n\n${choices}`,
             thumbnail: {
                 url: message.author.avatarURL()

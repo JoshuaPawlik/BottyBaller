@@ -5,7 +5,7 @@ require('dotenv').config();
 
 
 //Channel variables
-// const bot_testing = '776494471813922836'
+const bot_testing = '776494471813922836'
 const thisOrThat = '787758467406495806';
 const clips = '771437521875763251';
 const memes = '749073713164714174';
@@ -110,7 +110,16 @@ client.on('message', message =>{
     } else if (command == 'jojo'){
         client.commands.get('jojo').execute(message, args);
     } else if (command == 'poll'){
-        client.commands.get('poll').execute(message, args);
+        if (channelId !== polls && channelId !== bot_testing ){
+            message.channel.send(`Polls are made in <#${polls}>`)
+            .then(msg => {
+                message.delete().then(() =>{
+                    msg.delete({timeout: 5000});
+                }).catch(console.error);
+            })
+        } else {
+            client.commands.get('poll').execute(message, args);
+        }
     } else if (command == 'suggest'){   
         if (channelId !== '752405474288074804'){
             message.channel.send(`Suggestions are made in <#${server_suggestions}>`)

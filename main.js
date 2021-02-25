@@ -92,7 +92,7 @@ client.on('message', message =>{
         return;
     }
     else if(channelId === confessions){
-            message.channel.send("You're not allowed to send messages here, only use the `/confess` command")
+            message.channel.send("You're only allowed to use the `/confess` command here")
             .then(msg => {
                 message.delete({timeout: 4000});
                 msg.delete({timeout: 4000});

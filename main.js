@@ -12,6 +12,8 @@ const memes = '749073713164714174';
 const emoji_submissions = '776528360850587648';
 const server_suggestions = '752405474288074804';
 const polls = '808969588603224084';
+const confessions = '813890360555208755';
+
 
 const client = new Discord.Client();
 module.exports = {client: client};
@@ -87,6 +89,15 @@ client.on('message', message =>{
             })
         .catch(console.error);
         }
+        return;
+    }
+    else if(channelId === confessions){
+            message.channel.send("You're not allowed to send messages here, only use the `/confess` command")
+            .then(msg => {
+                message.delete({timeout: 4000});
+                msg.delete({timeout: 4000});
+            })
+        .catch(console.error);
         return;
     }
     else if(channelId === server_suggestions /*|| channelId === bot_testing*/){

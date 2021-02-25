@@ -171,9 +171,9 @@ client.login(process.env.BOT_TOKEN);
 
 
 
-module.exports = {
-    client: client
-}
+// module.exports = {
+//     client: client
+// }
 // const sequelize = new Sequelize('database', 'user', 'password', {
 // 	host: 'localhost',
 // 	dialect: 'sqlite',

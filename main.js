@@ -14,6 +14,7 @@ const server_suggestions = '752405474288074804';
 const polls = '808969588603224084';
 
 const client = new Discord.Client();
+module.exports = {client: client};
 
 const prefix = 'caffeine';
 const prefix2 ='Caffeine'
@@ -32,6 +33,22 @@ for(const file of commandFiles){
 
 client.once('ready', () => {
     console.log('Caffeine is online!');
+
+    client.api.applications(client.user.id).guilds("652753932904562709").commands.post({
+        data: {
+            name: "confess",
+            description: "Make a private confession",
+            options: [{
+                type: 3,
+                name: "confession",
+                description: "Something",
+                required: true
+    
+            }]
+        }
+    });
+
+
 });
 
 client.on('message', message =>{
@@ -147,7 +164,6 @@ client.on('message', message =>{
 
 
 
-
 //Keep this at the bottom of the file
 client.login(process.env.BOT_TOKEN);
 
@@ -155,6 +171,9 @@ client.login(process.env.BOT_TOKEN);
 
 
 
+module.exports = {
+    client: client
+}
 // const sequelize = new Sequelize('database', 'user', 'password', {
 // 	host: 'localhost',
 // 	dialect: 'sqlite',

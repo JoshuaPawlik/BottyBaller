@@ -1,4 +1,6 @@
-const {prefix, prefix2} = require('../config.json');
+const mongo = require('../mongo')
+const { prefix: globalPrefix,prefix2 } = require('../config.json')
+const guildPrefixes = {} // { 'guildId' : 'prefix' }
 
 const validatePermissions = (permissions) => {
   const validPermissions = [
@@ -42,6 +44,8 @@ const validatePermissions = (permissions) => {
   }
 }
 
+let recentlyRan = [] // guildId-userId-command
+
 module.exports = (client, commandOptions) => {
   let {
     commands,
@@ -49,6 +53,7 @@ module.exports = (client, commandOptions) => {
     permissionError = 'You do not have permission to run this command.',
     minArgs = 0,
     maxArgs = null,
+    cooldown = -1,
     permissions = [],
     requiredRoles = [],
     callback,
@@ -71,15 +76,19 @@ module.exports = (client, commandOptions) => {
   }
 
   // Listen for messages
-  client.on('message', (message) => {
+  client.on('message', async (message) => {
     const { member, content, guild } = message
+
+    const prefix = guildPrefixes[guild.id] || globalPrefix
 
     for (const alias of commands) {
       const command = `${prefix}${alias.toLowerCase()}`
+      const command2 = `${prefix2}${alias.toLowerCase()}`
 
       if (
         content.toLowerCase().startsWith(`${command} `) ||
-        content.toLowerCase() === command
+        content.toLowerCase() === command || content.toLowerCase().startsWith(`${command2} `) ||
+        content.toLowerCase() === command2
       ) {
         // A command has been ran
 
@@ -105,14 +114,21 @@ module.exports = (client, commandOptions) => {
           }
         }
 
+        // Ensure the user has not ran this command too frequently
+        //guildId-userId-command
+        let cooldownString = `${guild.id}-${member.id}-${commands[0]}`
+        console.log('cooldownString:', cooldownString)
+
+        if (cooldown > 0 && recentlyRan.includes(cooldownString)) {
+          message.reply('You cannot use that command so soon, please wait.')
+          return
+        }
+
         // Split on any number of spaces
         const arguments = content.split(/[ ]+/)
 
         // Remove the command which is the first index
-        arguments.shift()
-        arguments.shift()
-
-        // console.log("Arguments in command base ------------------------>", arguments);
+        arguments.splice(0,2)
 
         // Ensure we have the correct number of arguments
         if (
@@ -125,6 +141,20 @@ module.exports = (client, commandOptions) => {
           return
         }
 
+        if (cooldown > 0) {
+          recentlyRan.push(cooldownString)
+
+          setTimeout(() => {
+            console.log('Before:', recentlyRan)
+
+            recentlyRan = recentlyRan.filter((string) => {
+              return string !== cooldownString
+            })
+
+            console.log('After:', recentlyRan)
+          }, 1000 * cooldown)
+        }
+
         // Handle the custom command code
         callback(message, arguments, arguments.join(' '), client)
 
@@ -133,3 +163,24 @@ module.exports = (client, commandOptions) => {
     }
   })
 }
+
+// module.exports.updateCache = (guildId, newPrefix) => {
+//   guildPrefixes[guildId] = newPrefix
+// }
+
+// module.exports.loadPrefixes = async (client) => {
+//   await mongo().then(async (mongoose) => {
+//     try {
+//       for (const guild of client.guilds.cache) {
+//         const guildId = guild[1].id
+
+//         const result = await commandPrefixSchema.findOne({ _id: guildId })
+//         guildPrefixes[guildId] = result ? result.prefix : globalPrefix
+//       }
+
+//       console.log(guildPrefixes)
+//     } finally {
+//       mongoose.connection.close()
+//     }
+//   })
+// }

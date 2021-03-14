@@ -44,6 +44,13 @@ const validatePermissions = (permissions) => {
   }
 }
 
+let deleteMessage = (msg,message) => {
+  msg.delete({timeout: 5000})
+  if (message){
+    message.delete({timeout: 5000})
+  }
+}
+
 let recentlyRan = [] // guildId-userId-command
 
 module.exports = (client, commandOptions) => {
@@ -120,7 +127,7 @@ module.exports = (client, commandOptions) => {
         console.log('cooldownString:', cooldownString)
 
         if (cooldown > 0 && recentlyRan.includes(cooldownString)) {
-          message.reply('You cannot use that command so soon, please wait.')
+          message.reply('You cannot use that command so soon, please wait.').then(msg => deleteMessage(msg, message))
           return
         }
 

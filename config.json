@@ -1,7 +1,0 @@
-{
-    "token":"ODE5NzczMzc0NDEwNTIyNjU0.YErfcw.S57cIZqxOTTeN6E9b5zrmkbZvaY",
-    "prefix":"caffeine ",
-    "prefix2":"Caffeine ",
-    "mongoPath": "mongodb://localhost:27017/Caffeine",
-    "redisPath": "//redis-14065.c246.us-east-1-4.ec2.cloud.redislabs.com:14065?password=IH7fH3shoA6tszCE6IIIJOHuafY3hKVE"
-}

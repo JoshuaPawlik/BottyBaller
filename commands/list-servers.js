@@ -1,5 +1,6 @@
 module.exports = {
     commands: 'listServers',
+    permissions: 'ADMINISTRATOR',
     callback: (message, args, text, client) => {
         client.guilds.cache.forEach((guild) => {
             message.channel.send(

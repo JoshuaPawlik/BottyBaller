@@ -6,6 +6,9 @@ const path = require('path')
 const fs = require('fs')
 const { Mongoose } = require('mongoose')
 const messageCounter = require('./message-counter')
+const tot = require('./features/tot')
+const emojiSubmission = require('./features/emojiSubmission')
+const upDownvote = require('./features/up-downvote')
 // const mongo = require('./util/mongo')
 
 client.on('ready', async () => {
@@ -32,7 +35,17 @@ client.on('ready', async () => {
       }
     }
   }
+
   readCommands('commands')
+  client.on('message', message => {
+
+    if (!message.author.bot){
+      tot(client, message);
+      upDownvote(client, message);
+      emojiSubmission(client,message);
+    }
+
+  })
 
   messageCounter(client)
   // command(client, ['cc', 'clearchannel'], (message) => {

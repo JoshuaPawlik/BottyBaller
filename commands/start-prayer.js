@@ -1,5 +1,5 @@
 module.exports = {
-    commands: ['start the prayer', 'start'],
+    commands: ['start the prayer'],
     cooldown: 20,
     callback: (message) => {
 

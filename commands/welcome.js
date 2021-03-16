@@ -5,6 +5,7 @@ const cache = {} // guildId: [channelId, text]
 
 module.exports = {
   commands: 'setWelcome',
+  permissions: 'ADMINISTRATOR',
   callback: async (message, arguments, text) => {
 
     const { channel, guild } = message

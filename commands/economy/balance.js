@@ -4,6 +4,7 @@ module.exports = {
     commands: ['balance', 'bal'],
     maxArgs: 1,
     expectedArgs: "[Target user's @]",
+    permissions: 'ADMINISTRATOR',
     callback: async (message) => {
         const target = message.mentions.users.first() || message.author
         const targetId = target.id;

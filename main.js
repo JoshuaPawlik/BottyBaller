@@ -5,9 +5,8 @@ const mongo = require('./mongo')
 const path = require('path')
 const fs = require('fs')
 const { Mongoose } = require('mongoose')
-const tot = require('./features/tot')
-const emojiSubmission = require('./features/emojiSubmission')
-const upDownvote = require('./features/up-downvote')
+const loadCommands = require('./commands/load-commands')
+const loadFeatures = require('./features/load-features')
 // const mongo = require('./util/mongo')
 
 const guildId = config.guildId;
@@ -24,10 +23,10 @@ client.on('ready', async () => {
   await mongo().then(() => {
     console.log("Connected to MongoDB");
   })
-//------------------Slash commands ----------------------------
-  const slashCommands = await getApp(guildId).commands.get();
-  console.log('slashCommands ====> ', slashCommands);
 
+  loadCommands(client);
+  loadFeatures(client);
+//------------------Slash commands ----------------------------
   await getApp(guildId).commands.post({
     data: {
       name: 'ping',
@@ -35,12 +34,62 @@ client.on('ready', async () => {
     }
   })
 
+
+  await getApp(guildId).commands.post({
+    data: {
+        name: "confess",
+        description: "Make a private confession",
+        options: [{
+            type: 3,
+            name: "confession",
+            description: "Something",
+            required: true
+
+        }]
+    }
+});
+
+
+const slashCommands = await getApp(guildId).commands.get();
+  console.log('slashCommands ====> ', slashCommands);
+
   client.ws.on('INTERACTION_CREATE', async (interaction) => {
-    const command = interaction.data.name.toLowerCase();
+    const { name, options } = interaction.data
+    const command = name.toLowerCase();
+
+    const args = {};
+
+    if (options) {
+      for (const option of options){
+        const {name,value} = option
+        args[name] = value
+      }
+    }
+
+    console.log(args)
 
     if (command === 'ping'){
+
       reply(interaction, 'pong')
       console.log("done")
+
+   } else if (command === 'confess'){
+
+    const Embed = {
+        color: Math.floor(Math.random()*16777215).toString(16),
+        title: `Anonymous Confession`,
+        description: `"${args.confession}"`,
+        timestamp: new Date(),
+        footer: {
+            text: 'Posted',
+            icon_url: '',
+        },
+    };
+    client.channels.cache.get(`${interaction.channel_id}`).send({embed: Embed})
+    .then(() => {
+      reply(interaction, 'You confesssion has been anomously submitted!');
+    })
+    .catch(console.error);
   }
 })
 
@@ -50,6 +99,7 @@ client.on('ready', async () => {
           type: 3,
           data: {
             content: response,
+            flags: 64
           }
         } 
       })
@@ -57,32 +107,6 @@ client.on('ready', async () => {
   //------------------Slash commands ----------------------------
 
 
-  const baseFile = 'command-base.js'
-  const commandBase = require(`./commands/${baseFile}`)
-
-  const readCommands = dir => {
-    const files = fs.readdirSync(path.join(__dirname, dir))
-    for (const file of files){
-      const stat = fs.lstatSync(path.join(__dirname,dir,file))
-      if (stat.isDirectory()){
-        readCommands(path.join(dir,file))
-      }else if (file !== baseFile) {
-        const option = require(path.join(__dirname,dir,file))
-        commandBase(client, option)
-      }
-    }
-  }
-  readCommands('commands')
-
-  client.on('message', message => {
-
-    if (!message.author.bot){
-      tot(client, message);
-      upDownvote(client, message);
-      emojiSubmission(client,message);
-    }
-
-  })
   // command(client, ['cc', 'clearchannel'], (message) => {
   //   if (message.member.hasPermission('ADMINISTRATOR')) {
   //     message.channel.messages.fetch().then((results) => {

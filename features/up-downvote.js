@@ -1,7 +1,9 @@
-let channels = ['749073713164714174','771437521875763251'];
+const config = require('../config.json');
+let channels = config.upDownvoteChannels;
 
-module.exports = (client, message) => {
-    const { channel } = message;
+module.exports = (client) => {
+    client.on('message', message => {
+        const { channel } = message;
     if(!channels.includes(channel.id) || message.author.bot){
         return
     }
@@ -22,4 +24,5 @@ module.exports = (client, message) => {
         console.log("Nothing detected");
     }
  
+    })
 }

@@ -1,6 +1,8 @@
-let channels = ['787758467406495806'];
+const config = require('../config.json');
+let channels = config.totChannels
 
-module.exports = (client, message) => {
+module.exports = (client) => {
+    client.on('message', message => {
         const { channel } = message;
 
 
@@ -95,4 +97,5 @@ module.exports = (client, message) => {
         }).catch(console.error);
         return;
 
+    })
 }

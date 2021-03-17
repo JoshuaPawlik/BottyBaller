@@ -1,11 +1,8 @@
-const { MessageEmbed } = require('discord.js');
-const { minArgs } = require('./add');
-
 module.exports = {
     commands: 'suggest',
     expectedArgs: '<suggestion>',
     minArgs: 1,
-    callback: (message, args, text, client) => {
+    callback: (message, args) => {
         let msgArgs = args.slice(0).join(" ");
 
         console.log("------------------->", message.author);

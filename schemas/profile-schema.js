@@ -8,7 +8,7 @@ const reqString = {
 const profileSchema = mongoose.Schema({
     guildId: reqString,
     userId: reqString,
-    coins: {
+    coffeebeans: {
         type: Number,
         require: true
     }

@@ -10,22 +10,22 @@ module.exports = {
         const mention = message.mentions.users.first();
 
         if (!mention){
-            message.reply('Please tag a user to add coins to')
+            message.reply('Please tag a user to add coffeebeans to')
             return
         }
 
-        const coins = arguments[1]
-        if (isNaN(coins)){
-            message.reply('Please provide a valid number of coins.')
+        const coffeebeans = arguments[1]
+        if (isNaN(coffeebeans)){
+            message.reply('Please provide a valid number of coffeebeans.')
             return 
         }
 
         const guildId = message.guild.id
         const userId = mention.id
 
-        const newCoins = await economy.addCoins(guildId, userId, coins);
+        const newcoffeebeans = await economy.addCoffeebeans(guildId, userId, coffeebeans);
 
-        message.reply(`You have given <@${userId}> ${coins} coins. They now have ${newCoins} coins!`)
+        message.reply(`You have given <@${userId}> ${coffeebeans} coffeebeans. They now have ${newcoffeebeans} coffeebeans <:coffeebeans:821788925793271881>!`)
 
     }
 }

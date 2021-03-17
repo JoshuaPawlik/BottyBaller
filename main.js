@@ -5,23 +5,60 @@ const mongo = require('./mongo')
 const path = require('path')
 const fs = require('fs')
 const { Mongoose } = require('mongoose')
-const messageCounter = require('./message-counter')
 const tot = require('./features/tot')
 const emojiSubmission = require('./features/emojiSubmission')
 const upDownvote = require('./features/up-downvote')
 // const mongo = require('./util/mongo')
 
+const guildId = config.guildId;
+const getApp = (guildId) => {
+  const app = client.api.applications(client.user.id)
+  if (guildId){
+    app.guilds(guildId)
+  }
+  return app;
+}
 client.on('ready', async () => {
   console.log('The client is ready!') 
 
   await mongo().then(() => {
     console.log("Connected to MongoDB");
   })
+//------------------Slash commands ----------------------------
+  const slashCommands = await getApp(guildId).commands.get();
+  console.log('slashCommands ====> ', slashCommands);
+
+  await getApp(guildId).commands.post({
+    data: {
+      name: 'ping',
+      description: 'A simple ping pong command'
+    }
+  })
+
+  client.ws.on('INTERACTION_CREATE', async (interaction) => {
+    const command = interaction.data.name.toLowerCase();
+
+    if (command === 'ping'){
+      reply(interaction, 'pong')
+      console.log("done")
+  }
+})
+
+  const reply = (interaction, response) => {
+    client.api.interactions(interaction.id, interaction.token).callback.post({
+        data:{
+          type: 3,
+          data: {
+            content: response,
+          }
+        } 
+      })
+  }
+  //------------------Slash commands ----------------------------
 
 
   const baseFile = 'command-base.js'
   const commandBase = require(`./commands/${baseFile}`)
-
 
   const readCommands = dir => {
     const files = fs.readdirSync(path.join(__dirname, dir))
@@ -35,8 +72,8 @@ client.on('ready', async () => {
       }
     }
   }
-
   readCommands('commands')
+
   client.on('message', message => {
 
     if (!message.author.bot){
@@ -46,8 +83,6 @@ client.on('ready', async () => {
     }
 
   })
-
-  messageCounter(client)
   // command(client, ['cc', 'clearchannel'], (message) => {
   //   if (message.member.hasPermission('ADMINISTRATOR')) {
   //     message.channel.messages.fetch().then((results) => {

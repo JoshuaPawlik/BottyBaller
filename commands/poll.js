@@ -1,7 +1,7 @@
 module.exports = {
  commands: ['poll'],
  cooldown: 60,
- callback: (message, args, client) => {
+ callback: (message, args) => {
 
         let msgArgs = args.slice(0).join(" ");
         var question = msgArgs.split("?")[0] + "?";

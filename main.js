@@ -17,6 +17,7 @@ const getApp = (guildId) => {
   }
   return app;
 }
+
 client.on('ready', async () => {
   console.log('The client is ready!') 
 
@@ -87,7 +88,7 @@ const slashCommands = await getApp(guildId).commands.get();
     };
     client.channels.cache.get(`${interaction.channel_id}`).send({embed: Embed})
     .then(() => {
-      reply(interaction, 'You confesssion has been anomously submitted!');
+      reply(interaction, 'Your confesssion has been anomously submitted!').catch(err => console.error(err))
     })
     .catch(console.error);
   }

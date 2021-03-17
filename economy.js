@@ -5,7 +5,7 @@ module.exports = (client) => {
 
 }
 
-module.exports.addCoins = async (guildId, userId, coins) => {
+module.exports.addCoffeebeans = async (guildId, userId, coffeebeans) => {
     console.log("Running find one and update")
     const result = await profileSchema.findOneAndUpdate({
         guildId,
@@ -14,7 +14,7 @@ module.exports.addCoins = async (guildId, userId, coins) => {
         guildId,
         userId,
         $inc:{
-            coins
+            coffeebeans: coffeebeans
         }
     },{
         upsert: true,
@@ -23,11 +23,11 @@ module.exports.addCoins = async (guildId, userId, coins) => {
     
     console.log('Result', result);
 
-    return result.coins;
+    return result.coffeebeans;
 }
 
 
-module.exports.getCoins = async (guildId, userId) => {
+module.exports.getCoffeebeans = async (guildId, userId) => {
     const result = await profileSchema.findOne({
         guildId,
         userId
@@ -35,17 +35,17 @@ module.exports.getCoins = async (guildId, userId) => {
 
     console.log('Result', result)
 
-    let coins = 0;
+    let coffeebeans = 0;
     if (result){
-        coins = result.coins
+        coffeebeans = result.coffeebeans
     } else {
         console.log('Inserting a document')
         await new profileSchema({
             guildId,
             userId,
-            coins
+            coffeebeans: coffeebeans
         }).save()
     }
 
-    return coins;
+    return coffeebeans;
 }

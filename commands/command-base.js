@@ -101,7 +101,7 @@ module.exports = (client, commandOptions) => {
         // A command has been ran
 
         // Ensure we are in the right channel
-        if (requiredChannel && requiredChannel !== channel.name) {
+        if ((requiredChannel && requiredChannel !== channel.name) && message.author.id !== message.guild.owner.id) {
           //<#ID>
           const foundChannel = guild.channels.cache.find((channel) => {
             return channel.name === requiredChannel

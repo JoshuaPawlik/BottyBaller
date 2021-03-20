@@ -1,27 +1,11 @@
-const { MessageEmbed } = require("discord.js");
-
-
-function sendMessage(message){
-    message.channel.send(`Hey <@${message.author.id}> your timer has finished!`).catch(console.error);
-    return;
-}
-
-
 module.exports = {
-    name: 'timer',
-    description: "This will make Caffeine ping you after a certain amount of time",
-    execute(message, args,client){
+    commands: ['timer', 'setTimer'],
+    callback: (message, args, text) => {
         // let msgArgs = args.slice(0).join(" ");
 
 
         console.log("Message args ------------>", args);
 
-        // const Embed = new MessageEmbed()
-        // .setColor(0xFFC300)
-        // .setTitle('Hey Everyone!')
-        // .setDescription(`${msgArgs}`)
-
-        // client.channels.cache.get('652753932904562712').send(Embed);
 
         var amount;
 
@@ -72,10 +56,13 @@ module.exports = {
 
 
 
-        setTimeout(sendMessage, totalTime, message );
+        setTimeout(() => {
+            message.channel.send(`Hey <@${message.author.id}> your timer has finished!`).catch(console.error);
+            return;
+        }, totalTime, message );
 
 
         return;
 
-    }
+    }    
 }

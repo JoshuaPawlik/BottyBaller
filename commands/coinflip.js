@@ -1,32 +1,6 @@
-const { MessageEmbed, messageReaction } = require("discord.js")
-
 module.exports = {
-    name: 'coinflip',
-    description: '',
-    execute(message,args){
-
-        // if (!args[1]){
-        //     const Embed = new MessageEmbed()
-        //     .setTitle('Make a Suggestion')
-        //     .setDescription('A suggestion for the Caffeine server')
-        //     message.channel.send(Embed);
-        //     return;
-        // }
-        // let msgArgs = args.slice(0).join(" ");
-
-        // console.log("------------------->", message.author);
-        
-        // const Embed = new MessageEmbed()
-        //     .setTitle(`Suggestion from ${message.author.username}`+ "#"+ `${message.author.discriminator}`)
-        //     .setDescription(`${msgArgs} \n\n <@277918166267461642>`);
-
-        // message.channel.send(Embed).then(messageReaction => {
-        //     messageReaction.react("a:AS_Upvote:774308897468710942")
-        //     messageReaction.react("a:AS_Downvote:774309005967360092")
-        //     message.delete({timeout: 1000});
-
-        // }).catch(console.error);
-
+    commands: ['coinflip', 'flip'],
+    callback: (message, arguments, text) => {
 
        function flip(num) {
         if (num === 1){

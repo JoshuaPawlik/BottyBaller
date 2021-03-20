@@ -1,19 +1,16 @@
-const { MessageEmbed, messageReaction } = require("discord.js")
+const config = require('../config.json');
+let channels = config.totChannels
 
-module.exports = {
-    name: 'tot',
-    description: '',
-    execute(message, client){
+module.exports = (client) => {
+    client.on('message', message => {
+        const { channel } = message;
 
-        // if (!args[1]){
-        //     const Embed = new MessageEmbed()
-        //     .setTitle('Make a Suggestion')
-        //     .setDescription('A suggestion for the Caffeine server')
-        //     client.channels.cache.get('752405474288074804').send({embed: Embed});
-        //     return;
-        // }
-        // let msgArgs = args.slice(0).join(" ");
-        // var splitted = msgArgs.split("or");
+
+
+        if (!channels.includes(channel.id) || message.author.bot) {
+            return
+          }
+
         var splitted = message.content.split("or")
         var tis = splitted[0];
         var that = splitted[1];
@@ -21,12 +18,12 @@ module.exports = {
         
 
         console.log("------------------->", message.author);
-        console.log("------------------->", message);
+        console.log("------------------->", message.channel);
 
         if (!tis || !that){
             message.channel.send("This or That usage is: ```<this> or <that>```").then(msg => {
-                message.delete().then(() =>{
-                    msg.delete({timeout: 15000});
+                message.delete({timeout: 15000}).then(() =>{
+                    msg.delete({timeout: 1000});
                 }).catch(console.error);
             })
             .catch(console.error);
@@ -91,7 +88,7 @@ module.exports = {
         // .setDescription(`${msgArgs}`)
         // .setAuthor(null,message.author.avatarURL())
 
-        client.channels.cache.get('787758467406495806').send({embed: Embed})
+        client.channels.cache.get(message.channel.id).send({embed: Embed})
             .then(messageReaction => {
             messageReaction.react("1️⃣")
             messageReaction.react("2️⃣")
@@ -99,5 +96,6 @@ module.exports = {
 
         }).catch(console.error);
         return;
-    }
+
+    })
 }

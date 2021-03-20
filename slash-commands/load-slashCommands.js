@@ -1,3 +1,5 @@
+const config = require('../config.json')
+
 module.exports = async (client, guildId) => {
 
     const getApp = (guildId) => {
@@ -62,9 +64,9 @@ module.exports = async (client, guildId) => {
                 icon_url: '',
             },
         };
-        client.channels.cache.get(`${interaction.channel_id}`).send({embed: Embed})
+        client.channels.cache.get(`${config.confessionsChannel}`).send({embed: Embed})
         .then(() => {
-          reply(interaction, 'Your confesssion has been anonomously submitted!')
+          reply(interaction, `Your confesssion has been anonomously submitted to <#${config.confessionsChannel}>!`)
         })
         .catch(console.error);
       }

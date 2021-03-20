@@ -1,9 +1,7 @@
-const { MessageEmbed, messageReaction } = require("discord.js")
-
 module.exports = {
-    name: 'poll',
-    description: '',
-    execute(message, args, client){
+ commands: ['poll'],
+ cooldown: 60,
+ callback: (message, args) => {
 
         let msgArgs = args.slice(0).join(" ");
         var question = msgArgs.split("?")[0] + "?";
@@ -68,5 +66,5 @@ module.exports = {
 
         }).catch(console.error);
         return;
-    }
+    }   
 }

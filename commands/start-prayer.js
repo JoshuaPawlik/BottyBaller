@@ -1,16 +1,7 @@
-const { MessageEmbed } = require("discord.js");
-
-
 module.exports = {
-    name: 'start',
-    description: "This will make Caffeine say something for you",
-    execute(message, args,client){
-        let msgArgs = args.slice(0).join(" ");
-
-        // const Embed = new MessageEmbed()
-        // .setColor(0xFFC300)
-        // .setTitle('Hey Everyone!')
-        // .setDescription(`${msgArgs}`)
+    commands: ['start the prayer'],
+    cooldown: 20,
+    callback: (message) => {
 
         function prayer(verse){
             if (verse === 1){

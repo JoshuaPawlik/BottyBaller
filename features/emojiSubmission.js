@@ -1,14 +1,16 @@
-const config = require('../config.json');
+// const config = require('../config.json');
 // let channels = config.emojiSubmissionChannels
 const channels = require('../channels')
 
 module.exports = (client) => {
-    client.on('message', (message) => {
+    client.on('message', async (message) => {
         const guildId = message.guild.id;
-        if( !channels.cacheIncludes('emojiSubmissions', guildId, message.channel.id )|| message.author.bot){
-            return;
+
+        let carryOn = await channels.carryOn(message, 'emojiSubmissions')
+        if(!carryOn){
+            return
         }
-        if (message.attachments.size > 0){
+        else if (message.attachments.size > 0){
             // console.log("------------------------> Message \n", JSON.stringify(message.attachments));
             message.react("a:AS_Upvote:774308897468710942")
                  .then(() => {
@@ -31,4 +33,5 @@ module.exports = (client) => {
         }
         return;
     })
+    return
 }

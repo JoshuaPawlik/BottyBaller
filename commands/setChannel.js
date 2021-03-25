@@ -1,14 +1,20 @@
 const channels = require('../channels')
-const { fetchChannels } = require('../channels')
+const { fetchChannels, validCommands, setChannel, getChannels } = require('../channels')
 module.exports = {
-    commands: 'setChannels',
+    commands: 'setChannel',
     minArgs: 2,
     expectedArgs: "<command> <channelId>",
     permissios: "ADMINISTRATOR",
     callback: async (message, args, text, client) => {
         const guildId = message.guild.id;
         const { channel } = message;
-        let result = await channels.getChannels(guildId, args[0])
+
+        if (!validCommands.includes(args[0])){
+            channel.send(`${args[0]} is not a valid command`)
+            return 
+        }
+
+        let result = await getChannels(guildId, args[0])
 
 
         let givenChannelId = (/<#(.*?)>/.exec(args[1]))[1]
@@ -21,7 +27,7 @@ module.exports = {
         }
 
 
-        result = await channels.setChannels(guildId, args[0], givenChannelId)
+        result = await setChannel(guildId, args[0], givenChannelId)
 
         console.log('Result after setting setChannels =======> ', result)
 

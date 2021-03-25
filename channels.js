@@ -3,15 +3,21 @@ const channelsSchema = require('./schemas/channels-schema')
 
 let channelsCache = {};
 
+const validCommands = [
+    'tot',
+    'upDown',
+    'emojiSubmissions'
+]
 
 const fetchChannels = async (guildId, command) => {
+    console.log("channelsCache", channelsCache)
     let query = {}
 
   if (guildId) {
     query.guildId = guildId
     query.command = command
   }
-  console.log("QUERY =====>", query)
+  console.log("Fetching channels, QUERY =====>", query)
   const results = await channelsSchema.find(query)
 
   for (const result of results) {
@@ -27,12 +33,28 @@ const fetchChannels = async (guildId, command) => {
   }
 }
 
+const carryOn = async (message, command) => {
+    const guildId = message.guild.id;
+        if (message.author.bot){
+            return false;
+        }
+        let includes = await module.exports.cacheIncludes(command, guildId, message.channel.id ) 
+        if( !includes ){
+            return false;
+        }
+        return true
+}
+
 module.exports = (client) => {
     fetchChannels()
 }
 
 module.exports.cacheIncludes = async (command, guildId, channelId) => {
-    return (channelsCache[guildId][command].includes(channelId))
+    if (channelsCache[guildId][command]){
+        return (channelsCache[guildId][command].includes(channelId))
+    } else{
+        return false
+    }
 }
 
 module.exports.getChannels = async (guildId, command) => {
@@ -59,7 +81,7 @@ module.exports.getChannels = async (guildId, command) => {
         return result;
 }
 
-module.exports.setChannels = async (guildId, command, channelId) => {
+module.exports.setChannel = async (guildId, command, channelId) => {
     const result = await channelsSchema.findOneAndUpdate({
         guildId,
         command
@@ -77,4 +99,22 @@ module.exports.setChannels = async (guildId, command, channelId) => {
     return result;
 }
 
+module.exports.removeChannel = async (guildId, command, channelId) => {
+    const result = await channelsSchema.updateMany({
+        guildId
+    },{
+        $pull: {
+            channels: channelId
+        }
+    },{
+        upsert: true,
+        new: true,
+        multi: true
+    })
+
+    return result;
+}
+
 module.exports.fetchChannels = fetchChannels
+module.exports.carryOn = carryOn
+module.exports.validCommands = validCommands

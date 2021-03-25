@@ -9,6 +9,7 @@ const loadCommands = require('./commands/load-commands')
 const loadFeatures = require('./features/load-features')
 const loadSlashCommands = require('./slash-commands/load-slashCommands')
 // const mongo = require('./util/mongo')
+const channels = require('./channels')
 
 const guildId = config.guildId;
 
@@ -22,7 +23,7 @@ client.on('ready', async () => {
   loadCommands(client);
   loadFeatures(client);
   loadSlashCommands(client, guildId);
-
+  channels.fetchChannels();
 
 })//end client.on
 

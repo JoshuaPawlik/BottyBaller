@@ -1,9 +1,11 @@
 const config = require('../config.json');
-let channels = config.emojiSubmissionChannels
+// let channels = config.emojiSubmissionChannels
+const channels = require('../channels')
 
 module.exports = (client) => {
     client.on('message', (message) => {
-        if(!channels.includes(message.channel.id) || message.author.bot){
+        const guildId = message.guild.id;
+        if( !channels.cacheIncludes('emojiSubmissions', guildId, message.channel.id )|| message.author.bot){
             return;
         }
         if (message.attachments.size > 0){

@@ -6,7 +6,8 @@ let channelsCache = {};
 const validCommands = [
     'tot',
     'upDown',
-    'emojiSubmissions'
+    'emojiSubmissions',
+    'confessions'
 ]
 
 const fetchChannels = async (guildId, command) => {
@@ -34,15 +35,32 @@ const fetchChannels = async (guildId, command) => {
 }
 
 const carryOn = async (message, command) => {
+
     const guildId = message.guild.id;
-        if (message.author.bot){
-            return false;
-        }
-        let includes = await module.exports.cacheIncludes(command, guildId, message.channel.id ) 
-        if( !includes ){
-            return false;
-        }
-        return true
+    if (message.author.bot){
+        return false;
+    }
+    
+    const includes = await module.exports.cacheIncludes(command, guildId, message.channel.id ) 
+    if( !includes ){
+        return false;
+    }
+
+    return true
+}
+
+const getChannelOfCommand = async (channelId, guildId, command) => {
+
+    // const includes = await module.exports.cacheIncludes(command, guildId, channelId ) 
+    // if( !includes ){
+    //     return false;
+    // }
+     
+    if(channelsCache[guildId][command].length > 0) {
+        return channelsCache[guildId][command][0]
+    } else {
+        return null
+    }
 }
 
 module.exports = (client) => {
@@ -50,6 +68,7 @@ module.exports = (client) => {
 }
 
 module.exports.cacheIncludes = async (command, guildId, channelId) => {
+    console.log("CHANNELS CACHE WITH GUILD ID", channelsCache[guildId])
     if (channelsCache[guildId][command]){
         return (channelsCache[guildId][command].includes(channelId))
     } else{
@@ -118,3 +137,5 @@ module.exports.removeChannel = async (guildId, command, channelId) => {
 module.exports.fetchChannels = fetchChannels
 module.exports.carryOn = carryOn
 module.exports.validCommands = validCommands
+module.exports.channelsCache = channelsCache
+module.exports.getChannelOfCommand = getChannelOfCommand

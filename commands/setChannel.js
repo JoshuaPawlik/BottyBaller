@@ -32,7 +32,7 @@ module.exports = {
         console.log('Result after setting setChannels =======> ', result)
 
         if (result.channels.length > 0){     
-            channel.send(`The set channel is <#${result.channels[result.channels.length - 1]}>`).then(() => {
+            channel.send(`The set channel for ${args[0]} is <#${result.channels[result.channels.length - 1]}>`).then(() => {
                 fetchChannels(guildId, args[0]);
             })
             .catch(err => console.error(err))

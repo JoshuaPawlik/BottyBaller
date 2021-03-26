@@ -5,7 +5,7 @@ module.exports = {
     minArgs: 1,
     callback: async (message, args, text, client) => {
         const guildId = message.guild.id;
-        const result = await channels.getChannels(guildId)
+        const result = await channels.getChannels(guildId, args[0])
 
         console.log('result =======> ', result)
 

@@ -3,6 +3,7 @@ module.exports = {
     commands: ['deleteSlash'],
     expectedArgs: "<id of command>",
     minArgs: 1,
+    permissions:"AMINISTRATOR",
     callback: async (message, args, text, client) => {
         
         const guildId = message.guild.id

@@ -1,3 +1,4 @@
+require('dotenv').config();
 const Discord = require('discord.js')
 const client = new Discord.Client()
 const config = require('./config.json')
@@ -11,7 +12,7 @@ const loadSlashCommands = require('./slash-commands/load-slashCommands')
 // const mongo = require('./util/mongo')
 const channels = require('./channels')
 
-const guildId = config.guildId;
+const guildId = process.env.GUILD_ID;
 
 client.on('ready', async () => {
   console.log('The client is ready!') 
@@ -27,4 +28,4 @@ client.on('ready', async () => {
 
 })//end client.on
 
-client.login(config.token)
+client.login(process.env.BOT_TOKEN)

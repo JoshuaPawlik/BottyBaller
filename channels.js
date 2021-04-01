@@ -56,7 +56,7 @@ const getChannelOfCommand = async (channelId, guildId, command) => {
     //     return false;
     // }
      
-    if(channelsCache[guildId][command].length > 0) {
+    if(channelsCache[guildId][command] && channelsCache[guildId][command].length > 0) {
         return channelsCache[guildId][command][0]
     } else {
         return null

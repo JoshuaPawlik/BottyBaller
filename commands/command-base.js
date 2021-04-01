@@ -1,6 +1,6 @@
 const mongo = require('../mongo')
-const { prefix: globalPrefix,prefix2 } = require('../config.json')
-const guildPrefixes = {} // { 'guildId' : 'prefix' }
+// const { prefix: globalPrefix,prefix2 } = require('../config.json')
+// const guildPrefixes = {} // { 'guildId' : 'prefix' }
 
 const validatePermissions = (permissions) => {
   const validPermissions = [
@@ -87,7 +87,9 @@ module.exports = (client, commandOptions) => {
   client.on('message', async (message) => {
     const { member, content, guild, channel } = message
 
-    const prefix = guildPrefixes[guild.id] || globalPrefix
+    // const prefix = guildPrefixes[guild.id] || globalPrefix
+    const prefix = 'Caffeine '
+    const prefix2 = 'caffeine '
 
     for (const alias of commands) {
       const command = `${prefix}${alias.toLowerCase()}`
@@ -191,7 +193,6 @@ module.exports = (client, commandOptions) => {
 
 // module.exports.loadPrefixes = async (client) => {
 //   await mongo().then(async (mongoose) => {
-//     try {
 //       for (const guild of client.guilds.cache) {
 //         const guildId = guild[1].id
 
@@ -200,8 +201,6 @@ module.exports = (client, commandOptions) => {
 //       }
 
 //       console.log(guildPrefixes)
-//     } finally {
-//       mongoose.connection.close()
 //     }
 //   })
 // }

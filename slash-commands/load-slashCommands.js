@@ -59,7 +59,7 @@ module.exports = async (client, guildId) => {
       const {channel_id, guild_id} = interaction;
 
       const setChannel = await channels.getChannelOfCommand(channel_id, guild_id, 'confessions')
-      console.log("SET CHANNEL IN SLASHCOMMANDS =====>", setChannel)
+      
       if(!setChannel){
         // console.log("CARRY ON SLASH FAILED", channel_id, guildId )
         reply(interaction, 'You may not have a defined confessions channel, contact an Administrator');

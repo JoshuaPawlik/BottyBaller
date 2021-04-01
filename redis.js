@@ -1,5 +1,4 @@
 const redis = require('redis')
-const { redisPath } = require('./config.json')
 
 module.exports = async () => {
   return await new Promise((resolve, reject) => {

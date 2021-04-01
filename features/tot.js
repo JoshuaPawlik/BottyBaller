@@ -1,15 +1,16 @@
 const config = require('../config.json');
-let channels = config.totChannels
+// let channels = config.totChannels
+const channels = require('../channels')
 
 module.exports = (client) => {
-    client.on('message', message => {
+    client.on('message', async message => {
         const { channel } = message;
 
 
-
-        if (!channels.includes(channel.id) || message.author.bot) {
+        let carryOn = await channels.carryOn(message, 'tot')
+        if(!carryOn){
             return
-          }
+        }
 
         var splitted = message.content.split("or")
         var tis = splitted[0];

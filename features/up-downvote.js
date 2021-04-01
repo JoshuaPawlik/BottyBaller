@@ -1,5 +1,3 @@
-const config = require('../config.json');
-// let channels = config.upDownvoteChannels;
 const channels = require('../channels')
 
 module.exports = (client) => {

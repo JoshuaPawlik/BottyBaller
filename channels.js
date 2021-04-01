@@ -68,8 +68,7 @@ module.exports = (client) => {
 }
 
 module.exports.cacheIncludes = async (command, guildId, channelId) => {
-    console.log("CHANNELS CACHE WITH GUILD ID", channelsCache[guildId])
-    if (channelsCache[guildId][command]){
+    if (channelsCache[guildId] && channelsCache[guildId][command]){
         return (channelsCache[guildId][command].includes(channelId))
     } else{
         return false

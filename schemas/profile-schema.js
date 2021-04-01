@@ -10,7 +10,7 @@ const profileSchema = mongoose.Schema({
     userId: reqString,
     coffeebeans: {
         type: Number,
-        require: true
+        default: 0
     }
 })
 

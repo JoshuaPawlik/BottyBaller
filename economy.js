@@ -29,7 +29,6 @@ module.exports.addCoffeebeans = async (guildId, userId, coffeebeans) => {
 
 module.exports.getCoffeebeans = async (guildId, userId) => {
     const result = await profileSchema.findOne({
-        guildId,
         userId
     })
 

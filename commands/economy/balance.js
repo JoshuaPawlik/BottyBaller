@@ -25,7 +25,7 @@ module.exports = {
             //     icon_url: 'https://i.imgur.com/wSTFkRM.png',
             //     url: 'https://discord.js.org',
             // },
-            description: `${coffeebeans}<:coffeebeans:820214111887556638>`,
+            description: `${coffeebeans} <:coffeebeans:820214111887556638>`,
             // thumbnail: {
                 // url: 'https://i.imgur.com/wSTFkRM.png',
                 // url: message.author.avatarURL()

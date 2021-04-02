@@ -4,7 +4,6 @@ module.exports = {
     commands: ['balance', 'bal'],
     maxArgs: 1,
     expectedArgs: "[Target user's @]",
-    permissions: 'ADMINISTRATOR',
     callback: async (message, args) => {
         const target = message.mentions.users.first() || message.author
         const targetId = target.id;
@@ -15,9 +14,9 @@ module.exports = {
         
         const coffeebeans = await economy.getCoffeebeans(guildId,userId);
         if (!args[0]){
-            message.reply(`You have ${coffeebeans}`)
+            message.reply(`You have ${coffeebeans} <:coffeebeans:820214111887556638>`)
         }else {
-            message.reply(`That user has ${coffeebeans}`)
+            message.reply(`That user has ${coffeebeans} <:coffeebeans:820214111887556638>`)
         }
     }
 }

@@ -37,7 +37,7 @@ module.exports = async (client, guildId) => {
   await getApp(guildId).commands.post({
     data: {
         name: "Change-Nickname",
-        description: "Change a user's nickname",
+        description: "Change a user's nickname for 30 coffeebeans",
         options: [{
             type: 3,
             name: "member",

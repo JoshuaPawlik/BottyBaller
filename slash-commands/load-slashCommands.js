@@ -138,8 +138,14 @@ module.exports = async (client, guildId) => {
           economy.subtractCoffeebeans(userId, 30)
           return
         }).catch(err => {
-            console.error(err)
-            reply(interaction, `You can't change that person's nickname`)
+            console.log(err.code)
+            if (err.code === 50013){
+              reply(interaction, `You can't change that person's nickname`)
+            } else if (err.code === 50035){
+              reply(interaction, `That nickname is too long`)
+            }else {
+              reply(interaction, `Looks like we encountered an unknown error, contact an admin with details on what went wrong`)
+            }
           return 
         })
       } 

@@ -1,5 +1,4 @@
-const mongo = require('../mongo')
-const profileSchema = require('../schemas/profile-schema')
+const economy = require('../economy')
 
 let messageCache = [];
 module.exports = (client) => {
@@ -18,17 +17,9 @@ module.exports = (client) => {
             return string !== id
             })
 
-            console.log('After:', messageCache)
+            // console.log('After:', messageCache)
         }, 1000 * 2 * 60)
         
-        const update = await profileSchema.findOneAndUpdate({
-            userId:id 
-        },{
-            $inc: {
-                'coffeebeans': Math.floor(Math.random() * 3) + 1  
-            }
-        },{
-            upsert: true
-        })       
+        economy.addCoffeebeans(id, (Math.floor(Math.random() * 3) + 1))
     })
 }

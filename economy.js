@@ -5,7 +5,7 @@ module.exports = (client) => {
 
 }
 
-module.exports.addCoffeebeans = async (guildId, userId, coffeebeans) => {
+module.exports.addCoffeebeans = async (userId, coffeebeans) => {
     console.log("Running find one and update")
     const result = await profileSchema.findOneAndUpdate({
         userId
@@ -44,7 +44,7 @@ module.exports.subtractCoffeebeans = async (guildId, userId, coffeebeans) => {
 }
 
 
-module.exports.getCoffeebeans = async (guildId, userId) => {
+module.exports.getCoffeebeans = async (userId) => {
     const result = await profileSchema.findOne({
         userId
     })

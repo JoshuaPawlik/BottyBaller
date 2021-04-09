@@ -115,7 +115,7 @@ module.exports = async (client, guildId) => {
       const userId = interaction.member.user.id
       console.log("Interaction=============>", interaction)
 
-      let userBeans = await economy.getCoffeebeans(null, userId)
+      let userBeans = await economy.getCoffeebeans(userId)
 
       if (userBeans < 30){
         reply(interaction, `You dont have enough coffeebeans for this! You need at least 100!`)
@@ -135,7 +135,7 @@ module.exports = async (client, guildId) => {
         member.setNickname(args.newnickname)
         .then(() => {
           reply(interaction, `You have mentioned ${args.member} and changed their nickname to \`${args.newnickname}\``)
-          economy.subtractCoffeebeans(guildId, userId, 30)
+          economy.subtractCoffeebeans(userId, 30)
           return
         }).catch(err => {
             console.error(err)

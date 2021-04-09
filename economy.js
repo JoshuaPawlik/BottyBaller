@@ -24,7 +24,7 @@ module.exports.addCoffeebeans = async (userId, coffeebeans) => {
     return result.coffeebeans;
 }
 
-module.exports.subtractCoffeebeans = async (guildId, userId, coffeebeans) => {
+module.exports.subtractCoffeebeans = async (userId, coffeebeans) => {
     console.log("Running find one and update")
     const result = await profileSchema.findOneAndUpdate({
         userId

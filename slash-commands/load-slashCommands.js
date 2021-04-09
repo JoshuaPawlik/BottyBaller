@@ -1,4 +1,5 @@
 const channels = require('../channels')
+const economy = require('../economy')
 
 
 module.exports = async (client, guildId) => {
@@ -32,6 +33,27 @@ module.exports = async (client, guildId) => {
           }]
       }
   });
+
+  await getApp(guildId).commands.post({
+    data: {
+        name: "Change-Nickname",
+        description: "Change a user's nickname for 30 coffeebeans",
+        options: [{
+            type: 3,
+            name: "member",
+            description: "@ the member",
+            required: true
+
+        },
+        {
+          type: 3,
+          name: "newNickname",
+          description: "What are we going to call them? ",
+          required: true
+        }
+      ]
+    }
+});
   
     client.ws.on('INTERACTION_CREATE', async (interaction) => {
       const { name, options } = interaction.data
@@ -47,13 +69,16 @@ module.exports = async (client, guildId) => {
       }
   
       console.log(args)
-  
+
+      //------------------------------------------Ping Command---------------------------------------------
       if (command === 'ping'){
   
         reply(interaction, 'pong')
         console.log("INTERACTION ==============>",interaction)
   
-      } else if (command === 'confess'){
+      }
+      //------------------------------------------Confess command------------------------------------------
+       else if (command === 'confess'){
 
       const {channel_id, guild_id} = interaction;
 
@@ -83,6 +108,41 @@ module.exports = async (client, guildId) => {
         reply(interaction, `Your confesssion has been anonomously submitted to <#${setChannel}>!`)
       })
       .catch(console.error);
+    }
+
+    //------------------------------------------Change nickname command------------------------------------------
+    else if (command === 'change-nickname'){
+      const userId = interaction.member.user.id
+      console.log("Interaction=============>", interaction)
+
+      let userBeans = await economy.getCoffeebeans(null, userId)
+
+      if (userBeans < 30){
+        reply(interaction, `You dont have enough coffeebeans for this! You need at least 100!`)
+        return 
+      }
+      else {
+        const guildId = interaction.guild_id
+        const guild = await client.guilds.cache.get(guildId)
+        let givenUserId = (/<@!(.*?)>/.exec(args.member))
+        if (!givenUserId){
+          reply(interaction, `You need to @ the user who's nickname you would like to change`)
+        }else {
+          givenUserId = (/<@!(.*?)>/.exec(args.member))[1]
+        }
+        console.log("GIVENUSERID===============>", args.member)
+        const member = await guild.members.fetch(givenUserId)
+        member.setNickname(args.newnickname)
+        .then(() => {
+          reply(interaction, `You have mentioned ${args.member} and changed their nickname to \`${args.newnickname}\``)
+          economy.subtractCoffeebeans(guildId, userId, 30)
+          return
+        }).catch(err => {
+            console.error(err)
+            reply(interaction, `You can't change that person's nickname`)
+          return 
+        })
+      } 
     }
   })
   

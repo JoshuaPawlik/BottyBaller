@@ -8,13 +8,30 @@ module.exports = (client) => {
 module.exports.addCoffeebeans = async (guildId, userId, coffeebeans) => {
     console.log("Running find one and update")
     const result = await profileSchema.findOneAndUpdate({
-        guildId,
         userId
     },{
-        guildId,
         userId,
         $inc:{
             coffeebeans: coffeebeans
+        }
+    },{
+        upsert: true,
+        new: true
+    })
+    
+    console.log('Result', result);
+
+    return result.coffeebeans;
+}
+
+module.exports.subtractCoffeebeans = async (guildId, userId, coffeebeans) => {
+    console.log("Running find one and update")
+    const result = await profileSchema.findOneAndUpdate({
+        userId
+    },{
+        userId,
+        $inc:{
+            coffeebeans: -coffeebeans
         }
     },{
         upsert: true,
@@ -40,7 +57,6 @@ module.exports.getCoffeebeans = async (guildId, userId) => {
     } else {
         console.log('Inserting a document')
         await new profileSchema({
-            guildId,
             userId,
             coffeebeans: coffeebeans
         }).save()

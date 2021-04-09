@@ -23,9 +23,9 @@ module.exports = {
         const guildId = message.guild.id
         const userId = mention.id
 
-        const newcoffeebeans = await economy.addCoffeebeans(guildId, userId, coffeebeans);
+        const newcoffeebeans = await economy.addCoffeebeans(null, userId, coffeebeans);
 
-        message.reply(`You have given <@${userId}> ${coffeebeans} coffeebeans. They now have ${newcoffeebeans} coffeebeans <:coffeebeans:821788925793271881>!`)
+        message.reply(`You have given <@${userId}> ${coffeebeans} coffeebeans. They now have ${newcoffeebeans}<:coffeebeans:820214111887556638>!`)
 
     }
 }

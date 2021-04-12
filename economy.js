@@ -16,7 +16,7 @@ module.exports.addCoffeebeans = async (userId, coffeebeans) => {
         }
     },{
         upsert: true,
-        new: true
+        new:true
     })
     
     console.log('Result', result);
@@ -60,6 +60,10 @@ module.exports.getCoffeebeans = async (userId) => {
             userId,
             coffeebeans: coffeebeans
         }).save()
+
+        coffeebeans = await profileSchema.findOne({
+            userId
+        })
     }
 
     return coffeebeans;

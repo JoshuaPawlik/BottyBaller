@@ -4,7 +4,7 @@ module.exports = {
     commands: ['addbalance', 'addbal'],
     minArgs: 2,
     maxArgs: 2,
-    expectedArgs: "<The target's @> <coin amount>",
+    expectedArgs: "<# of beans> <The target's @>",
     permissions: 'ADMINISTRATOR',
     callback: async (message, arguments) => {
         const mention = message.mentions.users.first();
@@ -14,13 +14,13 @@ module.exports = {
             return
         }
 
-        const coffeebeans = arguments[1]
+        const coffeebeans = arguments[0]
         if (isNaN(coffeebeans)){
             message.reply('Please provide a valid number of coffeebeans.')
             return 
         }
 
-        const guildId = message.guild.id
+        // const guildId = message.guild.id
         const userId = mention.id
 
         const newcoffeebeans = await economy.addCoffeebeans(userId, coffeebeans);

@@ -6,7 +6,6 @@ const reqString = {
 }
 
 const profileSchema = mongoose.Schema({
-    guildId: reqString,
     userId: reqString,
     coffeebeans: {
         type: Number,

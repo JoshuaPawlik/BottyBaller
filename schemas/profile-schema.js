@@ -2,7 +2,8 @@ const mongoose = require('mongoose')
 
 const reqString = {
     type:String,
-    required:true
+    required:true,
+    unique: true
 }
 
 const profileSchema = mongoose.Schema({

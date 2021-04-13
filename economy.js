@@ -60,10 +60,7 @@ module.exports.getCoffeebeans = async (userId) => {
             userId,
             coffeebeans: coffeebeans
         }).save()
-
-        coffeebeans = await profileSchema.findOne({
-            userId
-        })
+        return 0;
     }
 
     return coffeebeans;

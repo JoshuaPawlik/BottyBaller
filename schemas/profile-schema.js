@@ -11,7 +11,12 @@ const profileSchema = mongoose.Schema({
     coffeebeans: {
         type: Number,
         default: 0
+    },
+    reputation: {
+        type: Number,
+        default: 0
     }
+
 })
 
 module.exports = mongoose.model('profiles', profileSchema)

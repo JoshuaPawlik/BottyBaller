@@ -25,7 +25,7 @@ module.exports = {
         let userBeans = await economy.getCoffeebeans(senderId)
 
       if (userBeans < coffeebeans){
-        message.reply(`You dont have enough coffeebeans for this!`);
+        message.reply(`You dont have enough coffeebeans for that!`);
         return 
       }
 

@@ -118,7 +118,7 @@ module.exports = async (client, guildId) => {
       let userBeans = await economy.getCoffeebeans(userId)
 
       if (userBeans < 30){
-        reply(interaction, `You dont have enough coffeebeans for this! You need at least 100!`)
+        reply(interaction, `You dont have enough coffeebeans for this! You need at least 30 <:coffeebeans:820214111887556638>!`)
         return 
       }
       else {

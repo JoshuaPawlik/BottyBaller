@@ -7,7 +7,8 @@ const validCommands = [
     'tot',
     'upDown',
     'emojiSubmissions',
-    'confessions'
+    'confessions',
+    'deathnote'
 ]
 
 const fetchChannels = async (guildId, command) => {

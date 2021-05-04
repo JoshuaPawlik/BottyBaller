@@ -11,7 +11,13 @@ module.exports = {
         // let result = await channels.getChannels(guildId, args[0])
 
 
-        let givenChannelId = (/<#(.*?)>/.exec(args[0]))[1]
+        let givenChannelId = (/<#(.*?)>/.exec(args[0]))
+        if (givenChannelId){
+            givenChannelId = givenChannelId[1]
+        } else {
+            message.channel.send("You need to use # when you mention the channel");
+            return
+        }
         // console.log("--------> Given Channel ID: ", givenChannelId);
         // if (result !== null){
         //     if (result.channels.includes(`${givenChannelId}`)){

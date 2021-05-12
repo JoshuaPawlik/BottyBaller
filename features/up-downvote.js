@@ -2,7 +2,6 @@ const channels = require('../channels')
 
 module.exports = (client) => {
     client.on('message', async message => {
-        const { channel } = message;
     
         let carryOn = await channels.carryOn(message, 'upDown')
         if(!carryOn){

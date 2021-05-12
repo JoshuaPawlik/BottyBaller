@@ -2,8 +2,7 @@ const channels = require('../channels')
 
 module.exports = (client) => {
     client.on('message', async (message) => {
-        const guildId = message.guild.id;
-
+        
         let carryOn = await channels.carryOn(message, 'emojiSubmissions')
         if(!carryOn){
             return

@@ -2,12 +2,11 @@ const channels = require('../channels')
 
 module.exports = (client) => {
     client.on('message', async (message) => {
-        const guildId = message.guild.id;
-
         let carryOn = await channels.carryOn(message, 'deathnote')
         if(!carryOn){
             return
         }
+        const guildId = message.guild.id;
 
         // const author = message.author.id
         let mentionMember = message.mentions.members.first();    
@@ -21,7 +20,7 @@ module.exports = (client) => {
 
         mentionMember.kick()
             .then(() => {
-                console.log(`${mentionMember.displayName} has been killed.`)
+               message.author.send(`${mentionMember.displayName} has been killed.`).catch(console.error);
             })
             .catch(console.error);
 

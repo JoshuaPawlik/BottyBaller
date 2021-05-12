@@ -37,10 +37,11 @@ const fetchChannels = async (guildId, command) => {
 
 const carryOn = async (message, command) => {
 
-    const guildId = message.guild.id;
-    if (message.author.bot){
+    if (message.author.bot || message.channel.type === 'dm'){
         return false;
     }
+
+    const guildId = message.guild.id;
     
     const includes = await module.exports.cacheIncludes(command, guildId, message.channel.id ) 
     if( !includes ){

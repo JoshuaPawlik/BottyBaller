@@ -36,7 +36,7 @@ module.exports = async (client, guildId) => {
 
   await getApp(guildId).commands.post({
     data: {
-        name: "Change-Nickname",
+        name: "change-nickname",
         description: "Change a user's nickname for 30 coffeebeans",
         options: [{
             type: 3,
@@ -47,7 +47,7 @@ module.exports = async (client, guildId) => {
         },
         {
           type: 3,
-          name: "newNickname",
+          name: "new_nickname",
           description: "What are we going to call them? ",
           required: true
         }
@@ -132,9 +132,9 @@ module.exports = async (client, guildId) => {
         }
         console.log("GIVENUSERID===============>", args.member)
         const member = await guild.members.fetch(givenUserId)
-        member.setNickname(args.newnickname)
+        member.setNickname(args.new_nickname)
         .then(() => {
-          reply(interaction, `You have mentioned ${args.member} and changed their nickname to \`${args.newnickname}\``)
+          reply(interaction, `You have mentioned ${args.member} and changed their nickname to \`${args.new_nickname}\``)
           economy.subtractCoffeebeans(userId, 30)
           return
         }).catch(err => {
@@ -155,7 +155,7 @@ module.exports = async (client, guildId) => {
     const reply = (interaction, response) => {
       client.api.interactions(interaction.id, interaction.token).callback.post({
           data:{
-            type: 3,
+            type: 4,
             data: {
               content: response,
               flags: 64

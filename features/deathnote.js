@@ -6,7 +6,6 @@ module.exports = (client) => {
         if(!carryOn){
             return
         }
-        const guildId = message.guild.id;
 
         // const author = message.author.id
         let mentionMember = message.mentions.members.first();    
@@ -20,7 +19,7 @@ module.exports = (client) => {
 
         mentionMember.kick()
             .then(() => {
-               message.author.send(`${mentionMember.displayName} has been killed.`).catch(console.error);
+               message.author.send(`You've written ${mentionMember.displayName}'s name in the deathnote.`).catch(console.error);
             })
             .catch(console.error);
 

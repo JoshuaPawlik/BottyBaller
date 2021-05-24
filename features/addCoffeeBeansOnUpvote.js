@@ -1,5 +1,6 @@
 const economy = require('../economy')
 const channels = require('../channels')
+const profile = require('../profile')
 let upvoteCache = [];
 const { channelsCache } = channels;
 module.exports = (client) => {
@@ -20,7 +21,8 @@ module.exports = (client) => {
             upvoteCache.push(`${user.id}-${message.id}`)
             // console.log(upvoteCache);
     
-            const update = economy.addCoffeebeans(messageAuthor.id, 1);
+            const update = await economy.addCoffeebeans(messageAuthor.id, 1);
+            await profile.addReputation(messageAuthor.id, 1);
             console.log(update);
             return;
         }

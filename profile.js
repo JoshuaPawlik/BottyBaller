@@ -5,14 +5,13 @@ module.exports = (client) => {
 
 }
 
-module.exports.addCoffeebeans = async (userId, coffeebeans) => {
-    console.log("Running find one and update")
+module.exports.addReputation = async (userId, rep) => {
     const result = await profileSchema.findOneAndUpdate({
         userId
     },{
         userId,
         $inc:{
-            coffeebeans: coffeebeans
+            reputation: rep
         }
     },{
         upsert: true,
@@ -21,17 +20,16 @@ module.exports.addCoffeebeans = async (userId, coffeebeans) => {
     
     console.log('Result', result);
 
-    return result.coffeebeans;
+    return result.rep;
 }
 
-module.exports.subtractCoffeebeans = async (userId, coffeebeans) => {
-    console.log("Running find one and update")
+module.exports.subtractReputation = async (userId, rep) => {
     const result = await profileSchema.findOneAndUpdate({
         userId
     },{
         userId,
         $inc:{
-            coffeebeans: -coffeebeans
+            rep: -rep
         }
     },{
         upsert: true,
@@ -40,28 +38,32 @@ module.exports.subtractCoffeebeans = async (userId, coffeebeans) => {
     
     console.log('Result', result);
 
-    return result.coffeebeans;
+    return result.rep;
 }
 
 
-module.exports.getCoffeebeans = async (userId) => {
+module.exports.getRep = async (userId) => {
     const result = await profileSchema.findOne({
         userId
     })
 
     console.log('Result', result)
 
-    let coffeebeans = 0;
+    let reputation = 0;
     if (result){
-        coffeebeans = result.coffeebeans
+        reputation = result.reputation
     } else {
         console.log('Inserting a document')
-        await new profileSchema({
-            userId,
-            coffeebeans: coffeebeans
-        }).save()
+        await profileSchema.findOneAndUpdate({
+            userId
+        },{
+            reputation: 0
+        },{
+            upsert: true,
+            new: true
+        })
         return 0;
     }
 
-    return coffeebeans;
+    return reputation;
 }

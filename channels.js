@@ -1,4 +1,3 @@
-const mongo = require('./mongo')
 const channelsSchema = require('./schemas/channels-schema')
 
 let channelsCache = {};
@@ -9,7 +8,8 @@ const validCommands = [
     'emojiSubmissions',
     'confessions',
     'deathnote',
-    'heartSubmissions'
+    'heartSubmissions',
+    'thumbsUp'
 ]
 
 const fetchChannels = async (guildId, command) => {

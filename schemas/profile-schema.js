@@ -2,16 +2,21 @@ const mongoose = require('mongoose')
 
 const reqString = {
     type:String,
-    required:true
+    required:true,
+    unique: true
 }
 
 const profileSchema = mongoose.Schema({
-    guildId: reqString,
     userId: reqString,
     coffeebeans: {
         type: Number,
         default: 0
+    },
+    reputation: {
+        type: Number,
+        default: 0
     }
+
 })
 
 module.exports = mongoose.model('profiles', profileSchema)

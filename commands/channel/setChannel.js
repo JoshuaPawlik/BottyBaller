@@ -1,5 +1,5 @@
-const channels = require('../channels')
-const { fetchChannels, validCommands, setChannel, getChannels } = require('../channels')
+const channels = require('../../channels')
+const { fetchChannels, validCommands, setChannel, getChannels } = require('../../channels')
 module.exports = {
     commands: 'setChannel',
     minArgs: 2,

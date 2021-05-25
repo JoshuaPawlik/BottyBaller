@@ -1,4 +1,4 @@
-const channels = require('../channels')
+const channels = require('../../channels')
 module.exports = {
     commands: 'getChannels',
     permissios: "ADMINISTRATOR",

@@ -1,5 +1,5 @@
-const channels = require('../channels')
-const { fetchChannels } = require('../channels')
+const channels = require('../../channels')
+const { fetchChannels } = require('../../channels')
 module.exports = {
     commands: 'removeChannel',
     minArgs: 1,

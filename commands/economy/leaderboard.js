@@ -27,21 +27,22 @@ module.exports = {
         let channel = message.channel;
         let string = ``;
         const guild = message.guild
-
-        for (var i = 0; (i < 10 && i < list.length) ; i++){
+        let j = 0;
+        for (var i = 0; (j < 10 && i < list.length) ; i++){
             let userId = list[i].userId
             let pass1;
             let nickname = await guild.members.fetch(userId).catch(() => {
-                console.log("Could not find member");
+                // console.log("Could not find member");
                 pass1 = false;
             })
             if (pass1 === false) {
-                i -= 1;
+                j -= 1;
                 continue;
             }
             let coffeebeans = await economy.getCoffeebeans(userId)
-            console.log("Nickname ===> ", nickname, "\n coffeebeans ====> ", coffeebeans);
+            // console.log("Nickname ===> ", nickname, "\n coffeebeans ====> ", coffeebeans);
             string += `**${i+1}.** ${nickname}: ${coffeebeans} <:coffeebeans:820214111887556638>\n\n`;
+            j++;
         }
 
         const Embed = {

@@ -35,7 +35,10 @@ module.exports = {
                 console.log("Could not find member");
                 pass1 = false;
             })
-            if (pass1 === false) continue;
+            if (pass1 === false) {
+                i -= 1;
+                continue;
+            }
             let coffeebeans = await economy.getCoffeebeans(userId)
             console.log("Nickname ===> ", nickname, "\n coffeebeans ====> ", coffeebeans);
             string += `**${i+1}.** ${nickname}: ${coffeebeans} <:coffeebeans:820214111887556638>\n\n`;

@@ -66,9 +66,9 @@ module.exports.getCoffeebeans = async (userId) => {
     return coffeebeans;
 }
 
-module.exports.getCoffeebeansFromGL = async (userId) => {
+module.exports.getCoffeebeansFromGL = async () => {
     const result = await profileSchema.find({}).sort({
-        field:'desc'
+        coffeebeans:"desc"
     })
 
     console.log('Result ===>', result)

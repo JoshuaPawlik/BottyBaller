@@ -30,9 +30,14 @@ module.exports = {
 
         for (var i = 0; (i < 10 && i < list.length) ; i++){
             let userId = list[i].userId
-            let nickname = await guild.members.fetch(userId);
-            let coffeebeans = await economy.getCoffeebeans(userId);
-            // console.log("Nickname ===> ", nickname)
+            let pass1;
+            let nickname = await guild.members.fetch(userId).catch(() => {
+                console.log("Could not find member");
+                pass1 = false;
+            })
+            if (pass1 === false) continue;
+            let coffeebeans = await economy.getCoffeebeans(userId)
+            console.log("Nickname ===> ", nickname, "\n coffeebeans ====> ", coffeebeans);
             string += `**${i+1}.** ${nickname}: ${coffeebeans} <:coffeebeans:820214111887556638>\n\n`;
         }
 

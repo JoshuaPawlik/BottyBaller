@@ -75,3 +75,25 @@ module.exports.getCoffeebeansFromGL = async () => {
 
     return result;
 }
+
+module.exports.getClaimedDailyStatus = async (userId) => {
+    const result = await profileSchema.findOne({
+        userId
+    })
+    console.log('Result', result)
+
+    return result.claimedDaily;
+}
+
+
+module.exports.setClaimedDaily = async (userId, value) => {
+    const result = await profileSchema.findOneAndUpdate({
+        userId
+    },{
+        userId,
+        claimedDaily: value
+    },{
+        upsert: true,
+        new:true
+    })
+}

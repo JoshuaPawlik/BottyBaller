@@ -6,7 +6,7 @@ module.exports = (client) => {
 }
 
 module.exports.addCoffeebeans = async (userId, coffeebeans) => {
-    console.log("Running find one and update")
+    // console.log("Running find one and update")
     const result = await profileSchema.findOneAndUpdate({
         userId
     },{
@@ -25,7 +25,7 @@ module.exports.addCoffeebeans = async (userId, coffeebeans) => {
 }
 
 module.exports.subtractCoffeebeans = async (userId, coffeebeans) => {
-    console.log("Running find one and update")
+    // console.log("Running find one and update")
     const result = await profileSchema.findOneAndUpdate({
         userId
     },{
@@ -80,9 +80,9 @@ module.exports.getClaimedDailyStatus = async (userId) => {
     const result = await profileSchema.findOne({
         userId
     })
-    console.log('Result', result)
+    // console.log('Result', result)
 
-    return result.claimedDaily;
+    return result?.claimedDaily;
 }
 
 

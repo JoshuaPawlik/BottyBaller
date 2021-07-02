@@ -15,6 +15,10 @@ const profileSchema = mongoose.Schema({
     reputation: {
         type: Number,
         default: 0
+    },
+    claimedDaily: {
+        type: Boolean,
+        default: false
     }
 
 })

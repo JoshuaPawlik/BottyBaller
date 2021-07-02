@@ -6,7 +6,7 @@ module.exports = (client) => {
 }
 
 module.exports.addCoffeebeans = async (userId, coffeebeans) => {
-    console.log("Running find one and update")
+    // console.log("Running find one and update")
     const result = await profileSchema.findOneAndUpdate({
         userId
     },{
@@ -25,7 +25,7 @@ module.exports.addCoffeebeans = async (userId, coffeebeans) => {
 }
 
 module.exports.subtractCoffeebeans = async (userId, coffeebeans) => {
-    console.log("Running find one and update")
+    // console.log("Running find one and update")
     const result = await profileSchema.findOneAndUpdate({
         userId
     },{
@@ -74,4 +74,26 @@ module.exports.getCoffeebeansFromGL = async () => {
     console.log('Result ===>', result)
 
     return result;
+}
+
+module.exports.getClaimedDailyStatus = async (userId) => {
+    const result = await profileSchema.findOne({
+        userId
+    })
+    // console.log('Result', result)
+
+    return result?.claimedDaily;
+}
+
+
+module.exports.setClaimedDaily = async (userId, value) => {
+    const result = await profileSchema.findOneAndUpdate({
+        userId
+    },{
+        userId,
+        claimedDaily: value
+    },{
+        upsert: true,
+        new:true
+    })
 }

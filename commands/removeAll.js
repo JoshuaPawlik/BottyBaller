@@ -14,9 +14,11 @@ module.exports = {
         // message.channel.send()
         // console.log("Role ===========>", role)
         // find all guild members that aren't bots, and add the "Community" role to each
-        message.guild.members.cache.filter((m) => (m.user.bot === false)).forEach(async (member) => {
-            console.log(member.user.username)
-            await member.roles.remove(role);
+        await message.guild.members.fetch().then((members) => {
+            members.filter((m) => (m.user.bot === false)).forEach(async (member) => {
+                console.log(member.user.username)
+                await member.roles.remove(role);
+            })
         })
 
         // notify the author of the command that the role was successfully added to all members

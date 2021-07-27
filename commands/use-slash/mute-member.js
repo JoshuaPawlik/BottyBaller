@@ -46,10 +46,12 @@ module.exports = {
 
                 economy.subtractCoffeebeans(userId, totalBeans)
                 await member.roles.add(role)
+                await member.voice.setMute(true)
 
                 const timeInMinutes = givenTime * 60 * 1000
                 setTimeout(() => { 
                     member.roles.remove(role)
+                    member.voice.setMute(false)
                 }, timeInMinutes);
 
 

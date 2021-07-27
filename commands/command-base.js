@@ -83,6 +83,43 @@ module.exports = (client, commandOptions) => {
     validatePermissions(permissions)
   }
 
+  client.ws.on('INTERACTION_CREATE', async (interaction) => {
+    const { name, options } = interaction.data
+    const content = name.toLowerCase();
+    for (const alias of commands) {
+      const command = `${alias.toLowerCase()}`
+      // const command2 = `${prefix2}${alias.toLowerCase()}`
+
+      if (content.toLowerCase().startsWith(`${command}`) || content.toLowerCase() === command){
+        
+        const args = {};
+
+        if (options) {
+          for (const option of options){
+            const {name,value} = option
+            args[name] = value
+          }
+        }
+
+        console.log(args)
+
+        callback(args, interaction, reply, client)
+      }
+    }
+})
+
+  const reply = (interaction, response) => {
+    client.api.interactions(interaction.id, interaction.token).callback.post({
+        data:{
+          type: 4,
+          data: {
+            content: response,
+            flags: 64
+          }
+        } 
+      })
+  }
+
   // Listen for messages
   client.on('message', async (message) => {
     const { member, content, guild, channel } = message

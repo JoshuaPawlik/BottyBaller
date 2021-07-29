@@ -97,3 +97,14 @@ module.exports.setClaimedDaily = async (userId, value) => {
         new:true
     })
 }
+
+module.exports.setClaimedDailyOfAll = async (value) => {
+    const result = await profileSchema.updateMany({
+        claimedDaily: true
+    },{
+        claimedDaily: value
+    },{
+        upsert: true,
+        new:true
+    })
+}

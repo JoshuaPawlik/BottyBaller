@@ -8,13 +8,6 @@ module.exports = {
         const dailyKeyPrefix = 'daily-';
         const redisClient = await redis();
         let claimedDaily = await economy.getClaimedDailyStatus(userId);
-        
-        redis.expire(message => {
-            if (message.startsWith(dailyKeyPrefix)){
-                const split = message.split('-');
-                economy.setClaimedDaily(split[1], false);
-            }
-        })
     
         if (!claimedDaily){
             try {
@@ -30,7 +23,6 @@ module.exports = {
                     })
                 }
                 redisClient.set(`${dailyKeyPrefix}${userId}`, true,'EX', 86400 );
-                // redisClient.set(`${dailyKeyPrefix}${userId}`, true,'EX', 10 );
             } 
             finally {
                 // redisClient.quit();

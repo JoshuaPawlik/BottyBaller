@@ -36,6 +36,7 @@ module.exports.expire = (callback) => {
       sub = redis.createClient({ url: redisPath })
       sub.subscribe('__keyevent@0__:expired', () => {
         sub.on('message', (channel, message) => {
+          console.log("A redis key has expired ====>", message);
           callback(message)
         })
       })

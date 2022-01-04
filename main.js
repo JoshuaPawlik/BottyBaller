@@ -1,14 +1,17 @@
 require('dotenv').config();
 const Discord = require('discord.js')
 const client = new Discord.Client()
-const mongo = require('./mongo')
 const path = require('path')
 const fs = require('fs')
 const { Mongoose } = require('mongoose')
+
+//Required Files
+const economy = require('./economy')
+const mongo = require('./mongo')
+const redis = require("./redis.js");
 const loadCommands = require('./commands/load-commands')
 const loadFeatures = require('./features/load-features')
 const loadSlashCommands = require('./slash-commands/load-slashCommands')
-// const mongo = require('./util/mongo')
 const channels = require('./channels')
 
 const guildId = process.env.GUILD_ID;
@@ -19,6 +22,17 @@ client.on('ready', async () => {
   await mongo().then(() => {
     console.log("Connected to MongoDB");
   })
+
+  await redis().then(() => {
+    console.log("Redis client created")
+  })
+
+  redis.expire(message => {
+    if (message.startsWith('daily-')){
+        const split = message.split('-');
+        economy.setClaimedDaily(split[1], false);
+    }
+})
   
   loadCommands(client);
   loadFeatures(client);

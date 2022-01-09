@@ -3,78 +3,80 @@ const economy = require('../economy')
 
 
 module.exports = async (client, guildId) => {
+  console.log("Slash commands disabled")
+//   const getApp = (guildId) => {
+//       const app = client.api.applications(client.user.id)
+//       if (guildId){
+//         app.guilds(guildId)
+//       }
+//       return app;
+//     }
+
+//   await getApp(guildId).commands.post({
+//       data: {
+//         name: 'ping',
+//         description: 'A simple ping pong command'
+//       }
+//     }).catch(err => {
+//       console.log(" There was an error witht the slash commands here it is =========>", err);
+//     })
   
-  const getApp = (guildId) => {
-      const app = client.api.applications(client.user.id)
-      if (guildId){
-        app.guilds(guildId)
-      }
-      return app;
-    }
-
-  await getApp(guildId).commands.post({
-      data: {
-        name: 'ping',
-        description: 'A simple ping pong command'
-      }
-    })
   
+//     await getApp(guildId).commands.post({
+//       data: {
+//           name: "confess",
+//           description: "Make a private confession",
+//           options: [{
+//               type: 3,
+//               name: "confession",
+//               description: "Something",
+//               required: true
   
-    await getApp(guildId).commands.post({
-      data: {
-          name: "confess",
-          description: "Make a private confession",
-          options: [{
-              type: 3,
-              name: "confession",
-              description: "Something",
-              required: true
-  
-          }]
-      }
-  });
+//           }]
+//       }
+//   });
 
-  await getApp(guildId).commands.post({
-    data: {
-        name: "change-nickname",
-        description: "Change a user's nickname for 30 coffeebeans",
-        options: [{
-            type: 3,
-            name: "member",
-            description: "@ the member",
-            required: true
+//   await getApp(guildId).commands.post({
+//     data: {
+//         name: "change-nickname",
+//         description: "Change a user's nickname for 30 coffeebeans",
+//         options: [{
+//             type: 3,
+//             name: "member",
+//             description: "@ the member",
+//             required: true
 
-        },
-        {
-          type: 3,
-          name: "new_nickname",
-          description: "What are we going to call them? ",
-          required: true
-        }
-      ]
-    }
-});
+//         },
+//         {
+//           type: 3,
+//           name: "new_nickname",
+//           description: "What are we going to call them? ",
+//           required: true
+//         }
+//       ]
+//     }
+// });
 
-  await getApp(guildId).commands.post({
-    data: {
-        name: "mute-member",
-        description: "Temporarily mute a fellow member",
-        options: [{
-            type: 3,
-            name: "member",
-            description: "@ the member",
-            required: true
+//   await getApp(guildId).commands.post({
+//     data: {
+//         name: "mute-member",
+//         description: "Temporarily mute a fellow member",
+//         options: [{
+//             type: 3,
+//             name: "member",
+//             description: "@ the member",
+//             required: true
 
-        },
-        {
-          type: 3,
-          name: "duration",
-          description: "Mute them for how many minutes? ",
-          required: true
-        }
-      ]
-    }
-  });
+//         },
+//         {
+//           type: 3,
+//           name: "duration",
+//           description: "Mute them for how many minutes? ",
+//           required: true
+//         }
+//       ]
+//     }
+//   });
 }
   
   //   client.ws.on('INTERACTION_CREATE', async (interaction) => {

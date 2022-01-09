@@ -17,14 +17,14 @@ module.exports = {
 
 
         if (splitted.length > 5){
-            message.channel.send("Max 5 choices!\n\n Usage is: \`caffeine poll [question]? [choice1], [choice2], [choice3]\` \n\n Make sure to include the question mark and commas!").then(msg => {
+            message.channel.send("Max 5 choices!\n\n Usage is: \`brew poll [question]? [choice1], [choice2], [choice3]\` \n\n Make sure to include the question mark and commas!").then(msg => {
                 message.delete().then(() =>{
                     msg.delete({timeout: 15000});
                 }).catch(console.error);
             }).catch(console.error);
             return;
         } else if (splitted.length < 2) {
-            message.channel.send("You need at least 2 choices!\n\n Usage is: \`caffeine poll [question]? [choice1], [choice2], [choice3]\` \n\n Make sure to include the question mark and commas!").then(msg => {
+            message.channel.send("You need at least 2 choices!\n\n Usage is: \`brew poll [question]? [choice1], [choice2], [choice3]\` \n\n Make sure to include the question mark and commas!").then(msg => {
                 message.delete().then(() =>{
                     msg.delete({timeout: 15000});
                 }).catch(console.error);

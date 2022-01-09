@@ -125,8 +125,8 @@ module.exports = (client, commandOptions) => {
     const { member, content, guild, channel } = message
 
     // const prefix = guildPrefixes[guild.id] || globalPrefix
-    const prefix = 'Caffeine '
-    const prefix2 = 'caffeine '
+    const prefix = 'Brew '
+    const prefix2 = 'brew '
 
     for (const alias of commands) {
       const command = `${prefix}${alias.toLowerCase()}`

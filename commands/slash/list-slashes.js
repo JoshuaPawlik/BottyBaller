@@ -16,8 +16,11 @@ module.exports = {
         const slashCommands = await getApp(guildId).commands.get();
         //  console.log('slashCommands ====> ', slashCommands);
 
+        let numSlashes = 0;
          for (const command of slashCommands){
-             message.channel.send(`Command name: ${command.name}, id: ${command.id}`)
+             message.channel.send(`Command name: ${command.name}, id: ${command.id}`);
+             numSlashes++;
          }
+         message.channel.send(`Total number of slash commands was: ${numSlashes}`);
     }
 }

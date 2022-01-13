@@ -9,7 +9,8 @@ const validCommands = [
     'confessions',
     'deathnote',
     'heartSubmissions',
-    'thumbsUp'
+    'thumbsUp',
+    'mod-logs'
 ]
 
 const fetchChannels = async (guildId, command) => {

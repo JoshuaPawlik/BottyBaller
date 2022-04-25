@@ -4,7 +4,7 @@ module.exports = {
     commands: 'removeChannel',
     minArgs: 1,
     expectedArgs: "<channelId>",
-    permissios: "ADMINISTRATOR",
+    permissions: "ADMINISTRATOR",
     callback: async (message, args, text, client) => {
         const guildId = message.guild.id;
         const { channel } = message;

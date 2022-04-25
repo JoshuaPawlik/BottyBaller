@@ -25,20 +25,11 @@ module.exports = {
             // client.channels.cache.get('777692879727755291')
             message.channel.send({embed: Embed}).
             then(sentEmbed => {
-                sentEmbed.react("a:AS_Upvote:774308897468710942")
-                .then(() => {
-                    sentEmbed.react("a:AS_Downvote:774309005967360092")
-                })
-                .catch(err => {
-                    console.error(err)
-                    sentEmbed.react('👍').then(() => {
-                        sentEmbed.react('👎')
-                    })
-                }
-                    
-                )
-                message.delete({timeout: 1000})
+                sentEmbed.react('👍').then(() => {
+                    sentEmbed.react('👎').catch(err => {console.error(err)});
+                }).catch(err => {console.error(error)})
             })
+            message.delete({timeout: 1000})
         return;
     } 
 }
